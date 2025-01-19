@@ -14,9 +14,18 @@ class NvidiaRacecar(Racecar):
     
     def __init__(self, *args, **kwargs):
         super(NvidiaRacecar, self).__init__(*args, **kwargs)
-        self.kit = ServoKit(channels=16, address=self.i2c_address)
-        self.steering_motor = self.kit.continuous_servo[self.steering_channel]
-        self.throttle_motor = self.kit.continuous_servo[self.throttle_channel]
+        try:
+             
+            self.kit = ServoKit(channels=16, address=self.i2c_address)
+            self.steering_motor = self.kit.continuous_servo[self.steering_channel]
+            self.throttle_motor = self.kit.continuous_servo[self.throttle_channel]
+        except Exception as e:
+            print(f"ServoKit not found {e}")
+    # def __init__(self, *args, **kwargs):
+    #     super(NvidiaRacecar, self).__init__(*args, **kwargs)
+    #     self.kit = ServoKit(channels=16, address=self.i2c_address)
+    #     self.steering_motor = self.kit.continuous_servo[self.steering_channel]
+    #     self.throttle_motor = self.kit.continuous_servo[self.throttle_channel]
     
     @traitlets.observe('steering')
     def _on_steering(self, change):

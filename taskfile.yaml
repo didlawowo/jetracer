@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  setup-gpio:
+    cmds:
+      - sudo usermod -aG gpio $USER
+      - sudo chown root.gpio /dev/gpiochip0
+      - sudo chmod 660 /dev/gpiochip0
+    desc: Configure GPIO permissions
+
+  restart-cam:
+    cmds:
+      - sudo -S systemctl restart nvargus-daemon 
+    desc: Restart camera daemon
